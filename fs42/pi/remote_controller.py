@@ -309,6 +309,13 @@ def handle_key_event(event):
     """Handle key press events from evdev"""
     if event.type == ecodes.EV_KEY and event.value == 1:  # Key press (not release)
         key_code = event.code
+
+        if key_code == 104:
+            channel_up_pressed()
+            return True
+        elif key_code == 109:
+            channel_down_pressed()
+            return True
         
         # Number keys (1-9, 0) - always handled the same way
         if key_code >= ecodes.KEY_1 and key_code <= ecodes.KEY_9:
@@ -354,8 +361,8 @@ def main():
     print(f"Remote Controller started. Connecting to {FS42_BASE_URL}")
     print("Press ESC to exit.")
     
-    # Find input device
-    device_path = find_input_device()
+    # Find input device find_input_device()
+    device_path = "/dev/input/event2"
     if not device_path:
         sys.exit(1)
     
